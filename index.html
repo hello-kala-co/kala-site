@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kala | AI creative consulting and production</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bone:#EAE8E3;--aub:#34232E;--chart:#D6E64B;--lav:#B9A8E0;
+  --bg:var(--bone);--ink:var(--aub);--ink-soft:#5a4652;--line:rgba(52,35,46,.18);
+  --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241820;--ink:var(--bone);--ink-soft:#c9c2c4;--line:rgba(234,232,227,.18)}}
+:root[data-theme="dark"]{--bg:#241820;--ink:var(--bone);--ink-soft:#c9c2c4;--line:rgba(234,232,227,.18)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--lav);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:multiply}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.mark{font:700 30px/1 var(--serif);letter-spacing:-.02em;text-decoration:none}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;align-items:center;font-size:15px}
+nav ul a{text-decoration:none}
+nav ul a:hover{text-decoration:underline;text-underline-offset:4px}
+.btn{display:inline-block;background:var(--lav);color:var(--aub)!important;text-decoration:none!important;padding:12px 22px;border-radius:2px;font-weight:500;font-size:15px}
+.btn:hover{background:#c9bbe8}
+.btn.ghost{background:transparent;color:var(--ink)!important;border:1px solid var(--ink)}
+.btn.ghost:hover{background:var(--line)}
+
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,56px);align-items:end;padding:clamp(32px,6vw,72px) 0 clamp(56px,8vw,96px)}
+.hero h1{font:500 clamp(46px,8.4vw,112px)/.92 var(--serif);letter-spacing:-.035em;margin:0 0 28px}
+.hero h1 span{display:block}
+.hero p{max-width:34ch;font-size:19px;color:var(--ink-soft);margin:0 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.panel{position:relative;aspect-ratio:4/5;overflow:hidden}
+.piece{z-index:1}.piece.bg-p{z-index:0}
+.bgfill{background:var(--aub);clip-path:polygon(0 3%,14% 0,38% 2%,62% 0,100% 1.5%,100% 100%,0 100%);overflow:hidden}
+.piece{position:absolute;touch-action:none;cursor:grab;outline-offset:2px}
+.piece.drag{cursor:grabbing}
+.piece>div{position:absolute;inset:0}
+.piece.orb-p{aspect-ratio:1}
+.orb{border-radius:50%;background:var(--lav);animation:drift 1.4s cubic-bezier(.2,.7,.2,1) both}
+.shard{background:var(--chart);clip-path:polygon(0 30%,100% 100%,0 100%)}
+.fig{background:#1d1419;border-radius:999px 999px 0 0}
+.h{position:absolute;right:-8px;bottom:-8px;width:16px;height:16px;background:var(--bone);border:2px solid var(--aub);border-radius:50%;cursor:nwse-resize;opacity:0;transition:opacity .15s;z-index:2}
+.piece:hover .h,.piece:focus-visible .h,.piece.drag .h{opacity:1}
+@media (hover:none){.h{opacity:1}}
+.panel small{position:absolute;right:16px;bottom:14px;color:var(--bone);font-size:12px;opacity:.8;pointer-events:none}
+.reset{position:absolute;left:12px;top:22px;z-index:3;font:500 12px var(--sans);color:var(--bone);background:rgba(29,20,25,.7);border:1px solid rgba(234,232,227,.4);border-radius:50%;width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+@keyframes drift{from{transform:translateX(30%);opacity:0}to{transform:none;opacity:1}}
+
+section{padding:clamp(56px,8vw,104px) 0;border-top:1px solid var(--line)}
+h2{font:500 clamp(34px,5vw,58px)/1 var(--serif);letter-spacing:-.025em;margin:0 0 20px}
+h3{font:500 24px/1.15 var(--serif);margin:0 0 10px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px)}
+.lead{font-size:20px;max-width:46ch}
+.future{margin-top:32px;padding:20px 24px;border-left:4px solid var(--lav)}
+.future h3{margin:0 0 6px}.future p{margin:0;color:var(--ink-soft)}
+
+.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:36px;border:1px solid var(--line)}
+.services article{padding:clamp(24px,3.5vw,44px);position:relative}
+.services article+article{border-left:1px solid var(--line)}
+.services .svc-circle::before{content:"";display:block;width:48px;height:48px;border-radius:50%;background:var(--lav);margin-bottom:28px}
+.services .svc-tri::before{content:"";display:block;width:56px;height:48px;background:var(--chart);clip-path:polygon(0 0,100% 100%,0 100%);margin-bottom:28px}
+.services .svc-half::before{content:"";display:block;width:56px;height:28px;border-radius:56px 56px 0 0;background:var(--aub);margin:20px 0 28px}
+.services p{margin:0;color:var(--ink-soft);max-width:38ch}
+
+.soon>*:not(.soon-tag),.soon::before{opacity:.35;filter:grayscale(1);transition:opacity .2s}
+.soon-tag{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 clamp(28px,3.5vw,40px)/1 var(--serif);color:var(--ink);opacity:0;transition:opacity .2s;pointer-events:none}
+.soon:hover .soon-tag,.soon:focus-visible .soon-tag{opacity:1}
+.soon:hover>*:not(.soon-tag),.soon:focus-visible>*:not(.soon-tag){opacity:.12}
+@media (hover:none){.soon-tag{opacity:1;inset:auto;top:16px;right:16px;font:500 13px var(--sans);background:var(--lav);color:var(--aub);padding:4px 10px}}
+.case{background:var(--aub);color:var(--bone);border-top:none;position:relative;overflow:hidden}
+.case h2{color:var(--bone);font-weight:700;letter-spacing:-.01em;max-width:18ch}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:40px 0;border-top:1px solid rgba(234,232,227,.25)}
+.stats div{padding:24px 20px 0 0}
+.stats b{display:block;font:500 clamp(44px,6vw,72px)/1 var(--sans);color:var(--bone);letter-spacing:-.02em;padding-bottom:10px;margin-bottom:10px;border-bottom:3px solid var(--lav);width:max-content}
+.stats span{font-size:16px;color:var(--bone)}
+.case dl{display:grid;grid-template-columns:140px 1fr;gap:14px 28px;margin:0;max-width:760px}
+.case dt{font-weight:500;color:var(--chart)}
+.case dd{margin:0;opacity:.9}
+
+.steps{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px);counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--ink);padding-top:18px}
+.steps li::before{content:counter(s);font:500 44px/1 var(--serif);display:block;margin-bottom:14px;color:var(--ink)}
+.steps p{margin:0;color:var(--ink-soft)}
+
+.contact{text-align:left}
+.contact h2{font-size:clamp(46px,9vw,120px);line-height:.9;margin-bottom:28px}
+.contact p{max-width:44ch;font-size:19px;color:var(--ink-soft);margin:0 0 30px}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:28px 0 36px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-soft)}
+footer a{text-underline-offset:3px}
+
+@media (max-width:820px){
+  nav ul li:not(:last-child){display:none}
+  .hero,.split,.services{grid-template-columns:1fr}
+  .services article+article{border-left:none;border-top:1px solid var(--line)}
+  .panel{aspect-ratio:1/1;order:-1}
+  .steps{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .case dl{grid-template-columns:1fr;gap:4px}
+  .case dd{margin-bottom:14px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .2  0 0 0 0 .14  0 0 0 0 .18  0 0 0 .55 0"/></filter></svg>
+
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="mark" href="#top">kala</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Case study</a></li>
+      <li><a class="btn" href="mailto:info@kala.company?subject=Working%20with%20Kala">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <h1><span>Creative AI</span><span>consultation</span><span>and production.</span></h1>
+      <div class="cta">
+        <a class="btn" href="mailto:info@kala.company?subject=Working%20with%20Kala">Let's chat</a>
+        <a class="btn ghost" href="#work">See the case study</a>
+      </div>
+    </div>
+    <div class="panel" aria-label="Abstract brand graphic you can rearrange">
+      <div class="piece bg-p" data-k="bg" tabindex="0" aria-label="Aubergine background. Drag or use arrow keys to move, Shift plus arrows to resize." style="left:0%;top:0%;width:100%;height:100%"><div class="bgfill"><svg class="grain" width="100%" height="100%" aria-hidden="true"><rect width="100%" height="100%" filter="url(#n)"/></svg></div><span class="h" style="right:8px;bottom:8px"></span></div>
+      <div class="piece orb-p" data-k="orb" tabindex="0" aria-label="Lavender circle. Drag or use arrow keys to move, Shift plus arrows to resize." style="left:30%;top:10%;width:66%"><div class="orb"></div><span class="h"></span></div>
+      <div class="piece" data-k="shard" tabindex="0" aria-label="Chartreuse shape. Drag or use arrow keys to move, Shift plus arrows to resize." style="left:0%;top:54%;width:70%;height:46%"><div class="shard"></div><span class="h"></span></div>
+      <div class="piece" data-k="fig" tabindex="0" aria-label="Figure shape. Drag or use arrow keys to move, Shift plus arrows to resize." style="left:22%;top:42%;width:30%;height:58%"><div class="fig"></div><span class="h"></span></div>
+      <button class="reset" type="button" aria-label="Reset shapes" title="Reset shapes"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
+      
+    </div>
+  </header>
+</div>
+
+<section id="about">
+  <div class="wrap split">
+    <h2>About Kala</h2>
+    <div>
+      <p class="lead" style="margin-top:0">Kala is a small creative technology studio. We produce AI-driven visual content for fashion and e-commerce brands, from campaign imagery to product shots, built on production systems we design ourselves.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <h2>What we do</h2>
+    <div class="services">
+      <article class="svc-tri">
+        <h3>Creative consultation</h3>
+        <p>We collaborate with you on the concept and art direction of your product visuals: studio, commercial and editorial.</p>
+      </article>
+      <article class="svc-circle">
+        <h3>Production</h3>
+        <p>We generate these visuals with AI, guided by the art direction and your brand guardrails. Ready to launch on social and e-commerce.</p>
+      </article>
+      <article class="svc-half soon" tabindex="0">
+        <span class="soon-tag">Coming soon</span>
+        <h3>Creative systems</h3>
+        <p>We help your team bring AI into your creative workflows: be it from conceptual art direction to your production systems behind content creation.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="case" id="work">
+  <svg class="grain" width="100%" height="100%" aria-hidden="true" style="mix-blend-mode:screen;opacity:.05"><rect width="100%" height="100%" filter="url(#n)"/></svg>
+  <div class="wrap" style="position:relative">
+    <h2>A summer collection, launched on time</h2>
+    <div class="stats">
+      <div><b>13</b><span>pieces in the collection</span></div>
+      <div><b>100+</b><span>visuals delivered</span></div>
+      <div><b>1 mo</b><span>from brief to launch</span></div>
+    </div>
+    <dl>
+      <dt>Challenge</dt><dd>A small fashion brand needed e-commerce and editorial visuals for its summer line, but a lean team and budget kept its campaigns from being fully executed.</dd>
+      <dt>What we did</dt><dd>Art-directed and produced more than 100 visuals in under a month.</dd>
+      <dt>Outcome</dt><dd>Early-access and launch campaigns went live on schedule across multiple channels.</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let's build together.</h2>
+    <p>Email us with your campaign goals and the outcomes you're after, and we'll reply with how we'd approach it.</p>
+    <a class="btn" href="mailto:info@kala.company?subject=Working%20with%20Kala">Contact</a>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>© 2026 Kala Sihav LLC</span>
+  </footer>
+</div>
+<script>
+(function(){
+var panel=document.querySelector('.panel');if(!panel)return;
+var pieces=[].slice.call(panel.querySelectorAll('.piece'));
+var defaults={};pieces.forEach(function(p){defaults[p.dataset.k]=p.getAttribute('style');});
+var KEY='kala-hero-shapes';
+function save(){try{var o={};pieces.forEach(function(p){o[p.dataset.k]=p.getAttribute('style');});localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
+try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved)pieces.forEach(function(p){if(saved[p.dataset.k])p.setAttribute('style',saved[p.dataset.k]);});}catch(e){}
+function pct(v,t){return Math.round(v/t*1000)/10;}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+var z=10;
+pieces.forEach(function(p){
+  p.addEventListener('pointerdown',function(e){
+    e.preventDefault();p.setPointerCapture(e.pointerId);p.style.zIndex=++z;p.classList.add('drag');
+    var r=panel.getBoundingClientRect(),b=p.getBoundingClientRect();
+    var resize=e.target.classList.contains('h');
+    var sx=e.clientX,sy=e.clientY,l=b.left-r.left,t=b.top-r.top,w=b.width,h=b.height;
+    function move(ev){
+      var dx=ev.clientX-sx,dy=ev.clientY-sy;
+      if(resize){
+        var nw=clamp(w+dx,24,r.width*1.5);p.style.width=pct(nw,r.width)+'%';
+        if(!p.classList.contains('orb-p')){var nh=clamp(h+dy,24,r.height*1.5);p.style.height=pct(nh,r.height)+'%';}
+      }else{
+        p.style.left=pct(clamp(l+dx,-w+24,r.width-24),r.width)+'%';
+        p.style.top=pct(clamp(t+dy,-h+24,r.height-24),r.height)+'%';
+      }
+    }
+    function up(){p.classList.remove('drag');p.removeEventListener('pointermove',move);p.removeEventListener('pointerup',up);p.removeEventListener('pointercancel',up);save();}
+    p.addEventListener('pointermove',move);p.addEventListener('pointerup',up);p.addEventListener('pointercancel',up);
+  });
+  p.addEventListener('focus',function(){p.style.zIndex=++z;});
+  p.addEventListener('keydown',function(e){
+    var k={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];if(!k)return;
+    e.preventDefault();var s=2;
+    if(e.shiftKey){
+      p.style.width=clamp(parseFloat(p.style.width)+k[0]*s+(p.classList.contains('orb-p')?-k[1]*s:0),5,150)+'%';
+      if(!p.classList.contains('orb-p'))p.style.height=clamp(parseFloat(p.style.height)-k[1]*s,5,150)+'%';
+    }else{
+      p.style.left=(parseFloat(p.style.left)+k[0]*s)+'%';p.style.top=(parseFloat(p.style.top)+k[1]*s)+'%';
+    }
+    save();
+  });
+});
+panel.querySelector('.reset').addEventListener('click',function(){pieces.forEach(function(p){p.setAttribute('style',defaults[p.dataset.k]);});try{localStorage.removeItem(KEY);}catch(e){}});
+})();
+</script>
+</body>
+</html>
